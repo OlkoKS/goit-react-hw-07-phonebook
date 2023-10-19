@@ -5,15 +5,15 @@ import {
   BtnElement,
 } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
-import { createContactData } from 'redux/contactsSlice';
+import { selectContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
 
 export const ContactForm = () => {
   const [form, setForm] = useState({ name: '', number: '' });
   const { name, number } = form;
 
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
 
   const handleChange = ({ target: { name, value } }) => {
     setForm(prevForm => ({ ...prevForm, [name]: value }));
@@ -31,7 +31,7 @@ export const ContactForm = () => {
       return alert(`${name} or ${number}  is already in contacts`);
     }
 
-    dispatch(createContactData(form));
+    dispatch(addContact(form));
 
     setForm({ name: '', number: '' });
   };
